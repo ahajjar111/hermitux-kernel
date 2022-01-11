@@ -647,6 +647,13 @@ void syscall_handler(struct state *s)
 			break;
 #endif
 
+#ifndef DISABLE_SYS_RENAME
+		case 82:
+			/* rename */
+			s->rax = sys_rename((const char *)s->rdi, (const char *)s->rsi);
+			break;
+#endif
+
 #ifndef DISABLE_SYS_UNLINK
 		case 87:
 			/* unlink */
@@ -813,7 +820,7 @@ void syscall_handler(struct state *s)
 #ifndef DISABLE_SYS_SCHED_GETAFFINITY
 			case 204:
 				s->rax = sys_sched_getaffinity(s->rdi, s->rsi, (long unsigned int *)s->rdx);
-				break;
+			5	break;
 #endif /* DISABLE_SYS_SCHED_GETAFFINITY */
 
 #ifndef DISABLE_SYS_GETDENTS64
